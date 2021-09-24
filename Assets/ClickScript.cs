@@ -34,6 +34,8 @@ public class ClickScript : MonoBehaviour
         string textToSet = timeTaken + "ms";
         if (early) textToSet += "\n(invalid, clicked early)";
         textToSet += "\n\n\nAverage: " + averageTimeTaken + "ms";
+        textToSet += "\nNumber of Attempts: " + attempts.Count;
+        textToSet += "\nBest this Session: " + attempts.Min() + "ms";
         text.SetText(textToSet);
         clickable = false;
         running = false;
