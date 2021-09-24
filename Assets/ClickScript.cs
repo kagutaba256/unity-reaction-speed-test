@@ -28,14 +28,14 @@ public class ClickScript : MonoBehaviour
       if (clickable)
       {
         float after = Time.time;
-        float timeTaken = (after - before) * 1000;
+        float timeTaken = Mathf.Round((after - before) * 1000);
         sr.color = Color.blue;
         string textToSet = timeTaken + "ms";
         if (early) textToSet += "\n(invalid, clicked early)";
         else attempts.Add(timeTaken);
         if (attempts.Count > 0)
         {
-          float averageTimeTaken = attempts.Average();
+          float averageTimeTaken = Mathf.Round(attempts.Average());
           textToSet += "\n\n\nAverage: " + averageTimeTaken + "ms";
           textToSet += "\nNumber of Attempts: " + attempts.Count;
           textToSet += "\nBest this Session: " + attempts.Min() + "ms";
