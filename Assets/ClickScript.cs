@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
@@ -10,10 +11,13 @@ public class ClickScript : MonoBehaviour
   private float before;
   private bool running;
   private bool clickable;
+  private bool early;
+  private List<float> attempts;
   // Start is called before the first frame update
   void Start()
   {
     StartCoroutine(StartTest());
+    attempts = new List<float>();
   }
 
   // Update is called once per frame
@@ -23,15 +27,23 @@ public class ClickScript : MonoBehaviour
     {
       if (clickable)
       {
-        float timeTaken = Time.time - before;
+        float timeTaken = (Time.time - before) * 1000;
+        attempts.Add(timeTaken);
+        float averageTimeTaken = attempts.Average();
         sr.color = Color.blue;
-        text.SetText(timeTaken * 1000 + "ms");
+        string textToSet = timeTaken + "ms";
+        if (early) textToSet += "\n(invalid, clicked early)";
+        textToSet += "\n\n\nAverage: " + averageTimeTaken + "ms";
+        text.SetText(textToSet);
         clickable = false;
         running = false;
+        early = false;
       }
       else if (running)
       {
         sr.color = Color.yellow;
+        text.SetText("Too early!");
+        early = true;
       }
       else
       {
