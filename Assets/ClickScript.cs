@@ -27,7 +27,8 @@ public class ClickScript : MonoBehaviour
     {
       if (clickable)
       {
-        float timeTaken = (Time.time - before) * 1000;
+        float after = Time.time;
+        float timeTaken = (after - before) * 1000;
         sr.color = Color.blue;
         string textToSet = timeTaken + "ms";
         if (early) textToSet += "\n(invalid, clicked early)";
@@ -66,7 +67,7 @@ public class ClickScript : MonoBehaviour
     yield return new WaitForSeconds(timeToWait / 1000);
     text.SetText("Click!");
     sr.color = Color.green;
-    before = Time.time;
     clickable = true;
+    before = Time.time;
   }
 }
